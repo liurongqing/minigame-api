@@ -9,6 +9,22 @@ const fetchUser = (() => {
 })();
 
 
+// 序列化  ctx.login() 触发
+passport.serializeUser((user: any, done) => {
+  done(null, user.id);
+});
+
+
+// 反序列化 请求时返回
+passport.deserializeUser(async (user, done) => {
+  try {
+    const user = await fetchUser();
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
+});
+
 passport.use(
   new Strategy(function(username, password, done) {
     fetchUser()
@@ -22,19 +38,5 @@ passport.use(
       .catch(err => done(err));
   })
 );
-
-
-passport.serializeUser((user: any, done) => {
-  done(null, user.id);
-});
-
-passport.deserializeUser(async (user, done) => {
-  try {
-    const user = await fetchUser();
-    done(null, user);
-  } catch (err) {
-    done(err);
-  }
-});
 
 export default passport;

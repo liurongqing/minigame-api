@@ -1,8 +1,8 @@
 import * as Router from 'koa-router'
 const router = new Router()
 
-import activityController from '../controllers/activity';
-import menuController from '../controllers/menu';
+import activityController from '@/controller/activity'
+import menuController from '@/controller/menu'
 
 router
   .get('/activity', activityController.find)
@@ -10,6 +10,6 @@ router
   .delete('/activity', activityController.delete)
   .get('/menu', menuController.find)
   .post('/menu', menuController.save)
-  .delete('/menu', menuController.delete);
+  .delete('/menu', menuController.delete)
 
 export default router

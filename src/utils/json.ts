@@ -1,5 +1,5 @@
 import { code } from '@/const'
-export default (data = {}, status = code.SUCCESS, msg = '') => {
+export const json = (data = {}, status = code.SUCCESS, msg = '') => {
   return {
     code: status,
     data,

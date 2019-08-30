@@ -1,1 +1,1 @@
-export { default as json } from './json';
+export { json } from './json'

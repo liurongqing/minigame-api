@@ -1,5 +1,5 @@
-import Model from '../models/menu.model'
-import { json } from '../utils'
+import Model from '@/model/menu.model'
+import { json } from '@/utils'
 
 export default {
   // get 查询列表

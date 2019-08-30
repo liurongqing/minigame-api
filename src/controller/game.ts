@@ -1,12 +1,12 @@
-import Model from '../models/game.model'
-import { json } from '../utils'
-import { pagination } from '../constants'
+import Model from '@/model/game.model'
+import { json } from '@/utils'
+import { pagination } from '@/const'
 
 export default {
   // get 查询列表
   async find(ctx: any) {
     const condition = { isDeleted: 0 }
-    const { page = pagination.page, pageSize = pagination.pageSize } = ctx.query
+    const { page = pagination.current, pageSize = pagination.pageSize } = ctx.query
     const result = await Promise.all([
       Model.count(condition),
       Model.find(condition)

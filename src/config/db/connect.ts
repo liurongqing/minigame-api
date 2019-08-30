@@ -8,10 +8,10 @@ export default () => {
   })
   const db = mongoose.connection
   db.on('error', (err: any) => {
-    console.error('connect mongodb fail， %o', err)
+    console.error('连接数据库失败， %o', err)
   })
 
   db.on('open', () => {
-    console.log('connect mongodb success')
+    console.log('连接数据库成功')
   })
 }

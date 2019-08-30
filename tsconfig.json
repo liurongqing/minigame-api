@@ -2,11 +2,12 @@
   "compilerOptions": {
     "baseUrl": "./",
     "module": "commonjs",
-    "target": "es2016",
+    "target": "es2015",
     "noImplicitAny": false,
     "removeComments": true,
     "preserveConstEnums": true,
-    "sourceMap": true,
+    "sourceMap": false,
+    "outDir": "dist",
     "paths": {
       "@/*": ["src/*"]
     }

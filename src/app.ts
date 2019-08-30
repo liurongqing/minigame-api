@@ -1,12 +1,13 @@
 import * as Koa from 'koa'
-import db from './config/db/connect'
-import routers from './routers'
 import * as bodyParser from 'koa-bodyparser'
 import * as session from 'koa-session2'
-import { code } from './constants'
-import { json } from './utils'
 
-import passport from './config/passport'
+import db from '@/config/db/connect'
+import routers from '@/router'
+import { code } from '@/const'
+import { json } from '@/utils'
+import passport from '@/config/passport'
+import { noAuthLoginList } from '@/const'
 
 const app = new Koa()
 
@@ -22,25 +23,25 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 // 登录验证判断
-// app.use(async (ctx: any, next) => {
-//   const url = ctx.originalUrl
-// //   console.log(url)
-// //   console.log(url.search('auth/login'))
-//   if (!ctx.isAuthenticated() && url.search('auth/login') < 0) {
-//     // console.log('2...')
-//     ctx.body = json({}, code.NOLOGIN)
-//     return
-//   } else {
-//     // console.log('3...')
-//     await next()
-//   }
-// })
+app.use(async (ctx: any, next) => {
+  const url = ctx.originalUrl
+  if (
+    !ctx.isAuthenticated() &&
+    !noAuthLoginList.some(v => v.indexOf(url) !== -1)
+  ) {
+    // 没登录, 且不在白名单里面
+    ctx.body = json({}, code.NO_LOGIN)
+    return
+  } else {
+    await next()
+  }
+})
 
 app.use(async (ctx: any, next) => {
   try {
     await next()
   } catch (err) {
-    ctx.body = json('', code.DATABASE, err.message)
+    ctx.body = json('', code.DATABASE_ERROR, err.message)
     ctx.app.emit('error', err, ctx)
   }
 })
@@ -48,7 +49,7 @@ app.use(async (ctx: any, next) => {
 app.use(routers.routes()).use(routers.allowedMethods())
 
 app.use(async ctx => {
-  ctx.body = json('', code.NOTFOUND, '该接口不存在！')
+  ctx.body = json('', code.NOT_FOUND, '该接口不存在！')
 })
 
 app.on('error', err => {
@@ -56,5 +57,5 @@ app.on('error', err => {
 })
 
 app.listen(9001, () => {
-  console.log('koa 监听 9001 端口 启动成功...')
+  console.log('服务端口 9001 启动成功...')
 })
