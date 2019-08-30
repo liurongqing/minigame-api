@@ -1,4 +1,4 @@
-import { code } from '../constants'
+import { code } from '@/const'
 export default (data = {}, status = code.SUCCESS, msg = '') => {
   return {
     code: status,
