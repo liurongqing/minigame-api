@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose'
 const { Schema } = mongoose
 
-export default mongoose.model(
+export const activityModel = mongoose.model(
   'activity',
   new Schema(
     {

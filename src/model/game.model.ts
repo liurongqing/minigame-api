@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose'
 const { Schema } = mongoose
 
-export default mongoose.model(
+export const gameModal = mongoose.model(
   'game',
   new Schema(
     {

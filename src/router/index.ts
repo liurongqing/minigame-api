@@ -1,10 +1,8 @@
-import * as Router from 'koa-router';
-const router = new Router();
+import * as Router from 'koa-router'
+const router = new Router()
 
-import admin from './admin';
-import auth from './auth';
+import admin from './admin'
 
-router.use('/admin', admin.routes(), admin.allowedMethods());
-router.use('/auth', auth.routes(), auth.allowedMethods());
+router.use('/admin', admin.routes(), admin.allowedMethods())
 
-export default router;
+export default router

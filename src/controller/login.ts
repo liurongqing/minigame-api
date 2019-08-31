@@ -1,13 +1,44 @@
-import Model from '@/model/login.model'
+import { adminModel as Model } from '@/model'
+import passport from '@/config/passport'
 import { json } from '@/utils'
+import { code } from '@/const'
 
 export default {
   // get 查询列表
-  async login(ctx: any) {
-    const condition = { isDeleted: 0 }
-    const info = Model.find(condition)
-    if (info) {
+  async login(ctx: any, next: any) {
+    passport.authenticate('local', (err, user, info, status) => {
+      if (user) {
+        ctx.body = json()
+        return ctx.login(user)
+      } else {
+        ctx.body = json(
+          {
+            err,
+            user,
+            info,
+            status
+          },
+          code.LOGIN_ERROR,
+          '登录失败'
+        )
+      }
+    })(ctx, next)
+  },
+  async logout(ctx: any) {
+    ctx.logout()
+    ctx.body = json()
+  },
+  async checkLogin(ctx: any) {
+    if (ctx.isAuthenticated()) {
+      ctx.body = '认证通过'
+    } else {
+      ctx.throw(401)
+      ctx.body = '非法访问'
     }
   },
-  async logout(ctx: any) {}
+  async passportLogin(username:any, password:any) {
+    const condition = { isDeleted: 0, username, password }
+    const userInfo = await Model.find(condition)
+    return userInfo ? json(userInfo) : json('', code.LOGIN_ERROR)
+  }
 }

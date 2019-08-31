@@ -1,12 +1,12 @@
 import * as mongoose from 'mongoose'
 const { Schema } = mongoose
 
-export default mongoose.model(
-  'login',
+export const adminModel = mongoose.model(
+  'admin',
   new Schema(
     {
-      username: String,
-      password: String,
+      username: String, // 用户名
+      password: String, // 密码
       isDeleted: {
         type: Number,
         default: 0,
@@ -14,6 +14,6 @@ export default mongoose.model(
         enum: [0, 1]
       }
     },
-    { collection: 'login', versionKey: false, timestamps: true }
+    { collection: 'admin', versionKey: false, timestamps: true }
   )
 )

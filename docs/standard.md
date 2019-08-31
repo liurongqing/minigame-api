@@ -21,7 +21,15 @@ import { clone } from '@/const'
 const data = []
 ```
 
+## 文件命名
 
+> 全部小骆峰法
+
+```typescript
+func_add // 波浪法
+funcAdd // 小骆峰法
+FuncAdd // 大骆峰法
+```
 
 
 
