@@ -1,3 +1,5 @@
+import 'module-alias/register'
+// require('module-alias/register')
 import * as Koa from 'koa'
 import * as bodyParser from 'koa-bodyparser'
 import * as session from 'koa-session2'
@@ -17,25 +19,25 @@ db()
 app.use(bodyParser())
 
 // 启用认证路由
-app.proxy = true
-app.use(session({ key: 'SESSIONID' }))
-app.use(passport.initialize())
-app.use(passport.session())
+// app.proxy = true
+// app.use(session({ key: 'SESSIONID' }))
+// app.use(passport.initialize())
+// app.use(passport.session())
 
-// 登录验证判断
-app.use(async (ctx: any, next) => {
-  const url = ctx.originalUrl
-  if (
-    !ctx.isAuthenticated() &&
-    !noAuthLoginList.some(v => v.indexOf(url) !== -1)
-  ) {
-    // 没登录, 且不在白名单里面
-    ctx.body = json({}, code.NO_LOGIN)
-    return
-  } else {
-    await next()
-  }
-})
+// // 登录验证判断
+// app.use(async (ctx: any, next) => {
+//   const url = ctx.originalUrl
+//   if (
+//     !ctx.isAuthenticated() &&
+//     !noAuthLoginList.some(v => v.indexOf(url) !== -1)
+//   ) {
+//     // 没登录, 且不在白名单里面
+//     ctx.body = json({}, code.NO_LOGIN)
+//     return
+//   } else {
+//     await next()
+//   }
+// })
 
 app.use(async (ctx: any, next) => {
   try {

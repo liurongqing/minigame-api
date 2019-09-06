@@ -6,6 +6,7 @@ export const adminModel = mongoose.model(
   new Schema(
     {
       username: String, // 用户名
+      nickname: String, // 昵称
       password: String, // 密码
       isDeleted: {
         type: Number,
