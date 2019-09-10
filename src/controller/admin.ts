@@ -18,7 +18,7 @@ export default {
 
     condition = filterEmptyField(condition)
 
-    const fields = '_id username createdAt'
+    const fields = '_id username nickname createdAt isDeleted'
 
     const result = await Promise.all([
       Model.count(condition),
