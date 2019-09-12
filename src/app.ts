@@ -6,7 +6,7 @@ import * as session from 'koa-session2'
 
 import db from '@/config/db/connect'
 import routers from '@/router'
-import { code } from '@/const'
+import { errcode } from '@/const'
 import { json } from '@/utils'
 import passport from '@/config/passport'
 import { noAuthLoginList } from '@/const'
@@ -39,19 +39,22 @@ app.use(bodyParser())
 //   }
 // })
 
-app.use(async (ctx: any, next) => {
-  try {
-    await next()
-  } catch (err) {
-    ctx.body = json('', code.DATABASE_ERROR, err.message)
-    ctx.app.emit('error', err, ctx)
-  }
-})
+// app.use(async (ctx: any, next) => {
+//   try {
+//     await next()
+//   } catch (err) {
+//     ctx.body = json('', code.DATABASE_ERROR, err.message)
+//     ctx.app.emit('error', err, ctx)
+//   }
+// })
 
 app.use(routers.routes()).use(routers.allowedMethods())
 
 app.use(async ctx => {
-  ctx.body = json('', code.NOT_FOUND, '该接口不存在！')
+  ctx.body = json({
+    code: errcode.NOT_FOUND,
+    msg: '该接口不存在！'
+  })
 })
 
 app.on('error', err => {

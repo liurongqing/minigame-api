@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose'
 const { Schema } = mongoose
 
-export const gameModal = mongoose.model(
+const gameModal = mongoose.model(
   'game',
   new Schema(
     {
@@ -22,3 +22,7 @@ export const gameModal = mongoose.model(
     { collection: 'game', versionKey: false, timestamps: true }
   )
 )
+
+
+
+export { gameModal }

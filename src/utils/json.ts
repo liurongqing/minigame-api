@@ -1,8 +1,14 @@
-import { code } from '@/const'
-export const json = (data = {}, status = code.SUCCESS, msg = '') => {
+import { errcode } from '@/const'
+export const json = ({
+  data = {},
+  code = errcode.SUCCESS,
+  msg = '',
+  log = ''
+} = {}) => {
   return {
-    code: status,
+    code,
     data,
-    msg
+    msg,
+    log
   }
 }

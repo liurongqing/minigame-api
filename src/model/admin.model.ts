@@ -1,4 +1,5 @@
 import * as mongoose from 'mongoose'
+import admin from '@/controller/admin'
 const { Schema } = mongoose
 
 export const adminModel = mongoose.model(
@@ -7,9 +8,6 @@ export const adminModel = mongoose.model(
     {
       username: {
         type: String,
-        index: true,
-        unique: true,
-        dropDups: true,
         required: true,
         trim: true
       }, // 用户名
@@ -26,5 +24,14 @@ export const adminModel = mongoose.model(
       }
     },
     { collection: 'admin', versionKey: false, timestamps: true }
-  )
+  ).index({ username: 1, isDeleted: -1 }, { unique: true })
 )
+// .index({ username: 1, isDeleted: -1 }, { unique: true })
+
+// adminModel.index
+// adminModel.index
+// adminModel.createIndexes(()=>{
+
+// })
+
+// adminModel.index({ username: 1, isDeleted: 1 }, { unique: true })

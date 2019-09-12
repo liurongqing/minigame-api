@@ -1,6 +1,6 @@
 import { adminModel as Model } from '@/model'
 import { json, filterEmptyField } from '@/utils'
-import { pagination } from '@/const'
+import { pagination, errcode } from '@/const'
 
 export default {
   // get 查询列表
@@ -29,8 +29,10 @@ export default {
     ])
     const [total, list] = result
     ctx.body = json({
-      list,
-      total
+      data: {
+        list,
+        total
+      }
     })
   },
 
@@ -45,15 +47,21 @@ export default {
 
     data = filterEmptyField(data)
 
-    // 先验证帐号不能重复
-
     let result: Object
-    if (_id) {
-      result = await Model.update({ _id }, { $set: data })
-    } else {
-      result = await Model.create(data)
+    try {
+      if (_id) {
+        result = await Model.update({ _id }, { $set: data })
+      } else {
+        result = await Model.create(data)
+      }
+      ctx.body = json({ data: result })
+    } catch (err) {
+      ctx.body = json({
+        code: errcode.DATABASE_ERROR,
+        msg: _id ? '修改失败' : '添加失败',
+        log: err.message
+      })
     }
-    ctx.body = json(result)
   },
 
   async delete(ctx: any) {

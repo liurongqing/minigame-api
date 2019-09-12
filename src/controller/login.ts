@@ -1,7 +1,7 @@
 import { adminModel as Model } from '@/model'
 import passport from '@/config/passport'
 import { json } from '@/utils'
-import { code } from '@/const'
+import { errcode } from '@/const'
 
 export default {
   // get 查询列表
@@ -11,16 +11,16 @@ export default {
         ctx.body = json()
         return ctx.login(user)
       } else {
-        ctx.body = json(
-          {
+        ctx.body = json({
+          data: {
             err,
             user,
             info,
             status
           },
-          code.LOGIN_ERROR,
-          '登录失败'
-        )
+          code: errcode.LOGIN_ERROR,
+          msg: '登录失败'
+        })
       }
     })(ctx, next)
   },
@@ -36,9 +36,13 @@ export default {
       ctx.body = '非法访问'
     }
   },
-  async passportLogin(username:any, password:any) {
+  async passportLogin(username: any, password: any) {
     const condition = { isDeleted: 0, username, password }
     const userInfo = await Model.find(condition)
-    return userInfo ? json(userInfo) : json('', code.LOGIN_ERROR)
+    return userInfo
+      ? json({ data: userInfo })
+      : json({
+          code: errcode.LOGIN_ERROR
+        })
   }
 }

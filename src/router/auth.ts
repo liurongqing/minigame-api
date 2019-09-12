@@ -1,7 +1,7 @@
 import * as Router from 'koa-router'
 import passport from '@/config/passport'
 import { json } from '@/utils'
-import { code } from '@/const'
+import { errcode } from '@/const'
 const router = new Router()
 
 router
@@ -11,16 +11,16 @@ router
         ctx.body = json()
         return ctx.login(user)
       } else {
-        ctx.body = json(
-          {
+        ctx.body = json({
+          data: {
             err,
             user,
             info,
             status
           },
-          code.NO_LOGIN,
-          '登录失败'
-        )
+          code: errcode.NO_LOGIN,
+          msg: '登录失败'
+        })
       }
     })(ctx, next)
   })
