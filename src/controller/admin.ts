@@ -21,7 +21,7 @@ export default {
     const fields = '_id username nickname createdAt isDeleted'
 
     const result = await Promise.all([
-      Model.count(condition),
+      Model.countDocuments(condition),
       Model.find(condition, fields)
         .sort({ createdAt: -1 })
         .limit(+pageSize)
@@ -36,12 +36,16 @@ export default {
 
   async save(ctx: any) {
     const { _id, username, nickname, password } = ctx.request.body
-    const data = {
+    let data: any = {
       _id,
       username,
       nickname,
       password
     }
+
+    data = filterEmptyField(data)
+
+    // 先验证帐号不能重复
 
     let result: Object
     if (_id) {

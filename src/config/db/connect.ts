@@ -4,6 +4,7 @@ const { user, pwd, database, host, port } = config
 
 export default () => {
   mongoose.connect(`mongodb://${user}:${pwd}@${host}:${port}/${database}`, {
+    useCreateIndex: true,
     useNewUrlParser: true
   })
   const db = mongoose.connection
