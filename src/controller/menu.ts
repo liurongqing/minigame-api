@@ -6,9 +6,10 @@ export default {
   // get 查询列表
   async find(ctx: any) {
     let condition: any = { isDeleted: 0 }
-    const { text } = ctx.query
+    const { text, status } = ctx.query
 
     condition.text = text
+    condition.status = status
 
     condition = filterEmptyField(condition)
 
