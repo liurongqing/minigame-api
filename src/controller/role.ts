@@ -16,7 +16,7 @@ export default {
 
     condition = filterEmptyField(condition)
 
-    const fields = '_id name status createdAt updatedAt'
+    const fields = '_id name status permissions createdAt updatedAt'
 
     const result = await Promise.all([
       Model.countDocuments(condition),
@@ -35,10 +35,11 @@ export default {
   },
 
   async save(ctx: any) {
-    const { _id, name, status } = ctx.request.body
+    const { _id, name, permissions, status } = ctx.request.body
     let data: any = {
       _id,
       name,
+      permissions,
       status
     }
 

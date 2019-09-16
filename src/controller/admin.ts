@@ -54,6 +54,7 @@ export default {
       } else {
         result = await Model.create(data)
       }
+
       ctx.body = json({ data: result })
     } catch (err) {
       ctx.body = json({
@@ -68,5 +69,7 @@ export default {
     const { _id } = ctx.request.body
     const result = await Model.update({ _id }, { $set: { isDeleted: 1 } })
     ctx.body = json(result)
+
+    // 更新下权限表， 菜单未激活或不存在了，权限删除禁用
   }
 }

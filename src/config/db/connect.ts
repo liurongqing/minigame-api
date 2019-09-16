@@ -6,6 +6,7 @@ export default () => {
   mongoose.connect(`mongodb://${user}:${pwd}@${host}:${port}/${database}`, {
     useCreateIndex: true,
     autoIndex: false,
+    useFindAndModify: false,
     useNewUrlParser: true
   })
   const db = mongoose.connection

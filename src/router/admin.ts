@@ -5,6 +5,7 @@ import loginController from '@/controller/login'
 import adminController from '@/controller/admin'
 import roleController from '@/controller/role'
 import menuController from '@/controller/menu'
+import permissionsController from '@/controller/permissions'
 
 router
   .post('/login', loginController.login)
@@ -19,5 +20,7 @@ router
   .get('/menu', menuController.find)
   .post('/menu', menuController.save)
   .delete('/menu', menuController.delete)
+  .get('/permissions', permissionsController.find)
+  .post('/permissions', permissionsController.save)
 
 export default router

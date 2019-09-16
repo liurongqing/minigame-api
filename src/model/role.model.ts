@@ -14,7 +14,10 @@ export const roleModel = mongoose.model(
         type: Number,
         default: 1,
         enum: [0, 1]
-      }, // 状态： 激活、停用
+      }, // 角色状态： 激活、停用
+      permissions: {
+        type: String
+      }, // {page: ['edit', 'add']}
       isDeleted: {
         type: Number,
         default: 0,

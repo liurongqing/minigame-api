@@ -1,6 +1,7 @@
-import { menuModel as Model } from '@/model'
+import { menuModel as Model, permissionsModel } from '@/model'
 import { json, filterEmptyField } from '@/utils'
 import { errcode } from '@/const'
+import { ObjectID, ObjectId } from 'bson'
 
 export default {
   // get 查询列表
@@ -41,14 +42,58 @@ export default {
 
     data = filterEmptyField(data)
 
-    let result: Object
+    let result: any
     try {
       if (_id) {
-        result = await Model.updateOne({ _id }, { $set: data })
+        result = await Model.findByIdAndUpdate(
+          { _id },
+          { $set: data },
+          {
+            new: true
+          }
+        )
       } else {
         result = await Model.create(data)
       }
+
       ctx.body = json({ data: result })
+
+      // 保存或修改成功时，要更新下权限表
+      const permissionsData = await permissionsModel.findOne({ menuId: _id })
+      if (permissionsData) {
+        // 权限表存在该条数据的话
+        if (!!result.status) {
+          // 是激活的话，更新菜单内容
+          await permissionsModel.update(
+            { menuId: _id },
+            {
+              $set: {
+                page: JSON.stringify({
+                  value: result.link,
+                  title: result.text
+                }),
+                isDeleted: 0
+              }
+            }
+          )
+        } else {
+          // 没激活，则删除该菜单权限信息
+          await permissionsModel.update({ menuId: _id }, { $set: { isDeleted: 1 } })
+        }
+      } else {
+        // 权限表不存在该条数据的话
+        if (!!result.status) {
+          // 如果是激活的话，添加该数据
+          await permissionsModel.create({
+            menuId: _id,
+            page: JSON.stringify({
+              value: result.link,
+              title: result.text
+            }),
+            feature: '[]'
+          })
+        }
+      }
     } catch (err) {
       ctx.body = json({
         code: errcode.DATABASE_ERROR,
