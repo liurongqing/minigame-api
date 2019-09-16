@@ -1,26 +1,20 @@
 import * as mongoose from 'mongoose'
 const { Schema } = mongoose
 
-export const menuModel = mongoose.model(
-  'menu',
+export const roleModel = mongoose.model(
+  'role',
   new Schema(
     {
-      text: String,
-      link: String,
-      icon: String,
-      parentId: {
+      name: {
         type: String,
-        default: '0'
-      },
+        required: true,
+        trim: true
+      }, // 角色名
       status: {
         type: Number,
         default: 1,
         enum: [0, 1]
-      },
-      sort: {
-        type: Number,
-        default: 0
-      },
+      }, // 状态： 激活、停用
       isDeleted: {
         type: Number,
         default: 0,
@@ -28,6 +22,6 @@ export const menuModel = mongoose.model(
         enum: [0, 1]
       }
     },
-    { collection: 'menu', versionKey: false, timestamps: true }
+    { collection: 'role', versionKey: false, timestamps: true }
   )
 )

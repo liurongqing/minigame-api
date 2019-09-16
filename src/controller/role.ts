@@ -1,41 +1,45 @@
-import { menuModel as Model } from '@/model'
+import { roleModel as Model } from '@/model'
 import { json, filterEmptyField } from '@/utils'
-import { errcode } from '@/const'
+import { pagination, errcode } from '@/const'
 
 export default {
   // get 查询列表
   async find(ctx: any) {
     let condition: any = { isDeleted: 0 }
-    const { text } = ctx.query
+    const {
+      name,
+      current = pagination.current,
+      pageSize = pagination.pageSize
+    } = ctx.query
 
-    condition.text = text
+    condition.name = name
 
     condition = filterEmptyField(condition)
 
-    const fields = '_id parentId text link icon status createdAt updatedAt sort'
+    const fields = '_id name status createdAt updatedAt'
 
-    const list = await Model.find(condition, fields).sort({
-      sort: 1,
-      createdAt: -1
-    })
+    const result = await Promise.all([
+      Model.countDocuments(condition),
+      Model.find(condition, fields)
+        .sort({ createdAt: -1 })
+        .limit(+pageSize)
+        .skip((current - 1) * +pageSize)
+    ])
+    const [total, list] = result
     ctx.body = json({
       data: {
         list,
-        total: 0
+        total
       }
     })
   },
 
   async save(ctx: any) {
-    const { _id, parentId, text, link, icon, status, sort } = ctx.request.body
+    const { _id, name, status } = ctx.request.body
     let data: any = {
       _id,
-      parentId,
-      text,
-      link,
-      icon,
-      status,
-      sort
+      name,
+      status
     }
 
     data = filterEmptyField(data)
@@ -43,7 +47,7 @@ export default {
     let result: Object
     try {
       if (_id) {
-        result = await Model.updateOne({ _id }, { $set: data })
+        result = await Model.update({ _id }, { $set: data })
       } else {
         result = await Model.create(data)
       }
