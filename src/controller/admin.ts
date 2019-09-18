@@ -18,7 +18,7 @@ export default {
 
     condition = filterEmptyField(condition)
 
-    const fields = '_id username nickname createdAt isDeleted'
+    const fields = '_id username nickname role createdAt isDeleted'
 
     const result = await Promise.all([
       Model.countDocuments(condition),
@@ -37,11 +37,12 @@ export default {
   },
 
   async save(ctx: any) {
-    const { _id, username, nickname, password } = ctx.request.body
+    const { _id, username, nickname, role, password } = ctx.request.body
     let data: any = {
       _id,
       username,
       nickname,
+      role,
       password
     }
 

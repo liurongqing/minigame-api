@@ -16,6 +16,9 @@ export const adminModel = mongoose.model(
         type: String,
         required: true
       }, // 密码
+      role: {
+        type: Array
+      }, // 所属角色
       isDeleted: {
         type: Number,
         default: 0,
