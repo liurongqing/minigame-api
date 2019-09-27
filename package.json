@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "tsc && (tsc -w & nodemon dist/app.js)",
-    "prod": "uglifyjs dist/app.js -o dist.min/ -c -m -p bare_returns"
+    "prod": "node build/compress.js"
   },
   "dependencies": {
     "koa": "^2.7.0",
@@ -29,6 +29,7 @@
     "@types/mongoose": "^5.5.12",
     "@types/passport-local": "^1.0.33",
     "nodemon": "^1.18.10",
+    "terser": "^4.3.3",
     "typescript": "^3.4.1",
     "uglify-js": "^3.6.0"
   },
