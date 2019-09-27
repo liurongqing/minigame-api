@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "tsc && (tsc -w & nodemon dist/app.js)",
-    "prod": "tsc"
+    "prod": "uglifyjs dist/app.js -o dist.min/ -c -m -p bare_returns"
   },
   "dependencies": {
     "koa": "^2.7.0",
@@ -29,7 +29,8 @@
     "@types/mongoose": "^5.5.12",
     "@types/passport-local": "^1.0.33",
     "nodemon": "^1.18.10",
-    "typescript": "^3.4.1"
+    "typescript": "^3.4.1",
+    "uglify-js": "^3.6.0"
   },
   "_moduleAliases": {
     "@": "./dist"
