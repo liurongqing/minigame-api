@@ -1,7 +1,7 @@
 export const filterEmptyField = (obj: any) => {
   let newObj = {}
   for (let i in obj) {
-    if (obj[i] !== null && obj[i] !== undefined && obj[i] !== '') {
+    if (![null, undefined, ''].includes(obj[i])) {
       newObj[i] = obj[i]
     }
   }

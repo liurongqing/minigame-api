@@ -1,7 +1,7 @@
 import * as passport from 'koa-passport'
 import { Strategy } from 'passport-local'
 
-import loginController from '@/controller/login'
+import loginController from '@/controllers/login'
 
 const fetchUser = (() => {
   const user = { id: 1, username: 'test', password: 'test' }

@@ -1,11 +1,11 @@
 import * as Router from 'koa-router'
 const router = new Router()
 
-import loginController from '@/controller/login'
-import adminController from '@/controller/admin'
-import roleController from '@/controller/role'
-import menuController from '@/controller/menu'
-import permissionsController from '@/controller/permissions'
+import loginController from '@/controllers/login'
+import adminController from '@/controllers/admin'
+import roleController from '@/controllers/role'
+import menuController from '@/controllers/menu'
+import permissionsController from '@/controllers/permissions'
 
 router
   .post('/login', loginController.login)

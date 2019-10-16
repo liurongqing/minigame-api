@@ -1,4 +1,4 @@
-import { menuModel as Model, permissionsModel } from '@/model'
+import { menuModel as Model, permissionsModel } from '@/models'
 import { json, filterEmptyField } from '@/utils'
 import { errcode } from '@/const'
 import { ObjectID, ObjectId } from 'bson'

@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose'
-import admin from '@/controller/admin'
+import admin from '@/controllers/admin'
 const { Schema } = mongoose
 
 export const adminModel = mongoose.model(

@@ -1,4 +1,4 @@
-import { adminModel as Model } from '@/model'
+import { adminModel as Model } from '@/models'
 import passport from '@/config/passport'
 import { json } from '@/utils'
 import { errcode } from '@/const'

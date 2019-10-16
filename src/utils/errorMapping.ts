@@ -5,7 +5,8 @@ const data = [
   [/sdfsdf/, 'sdfsfsdf']
 ]
 
-export const checkDB = (msg: any) => {
+// 错误映射
+export const errorMapping = (msg: any) => {
   const singleData = data.find((v: any) => {
     return new RegExp(v[0]).test(v[1])
   })

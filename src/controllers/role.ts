@@ -1,4 +1,4 @@
-import { adminModel as Model } from '@/model'
+import { roleModel as Model } from '@/models'
 import { json, filterEmptyField } from '@/utils'
 import { pagination, errcode } from '@/const'
 
@@ -7,18 +7,16 @@ export default {
   async find(ctx: any) {
     let condition: any = { isDeleted: 0 }
     const {
-      username,
-      nickname,
+      name,
       current = pagination.current,
       pageSize = pagination.pageSize
     } = ctx.query
 
-    condition.username = username
-    condition.nickname = nickname
+    condition.name = name
 
     condition = filterEmptyField(condition)
 
-    const fields = '_id username nickname role createdAt isDeleted'
+    const fields = '_id name status permissions createdAt updatedAt'
 
     const result = await Promise.all([
       Model.countDocuments(condition),
@@ -37,13 +35,12 @@ export default {
   },
 
   async save(ctx: any) {
-    const { _id, username, nickname, role, password } = ctx.request.body
+    const { _id, name, permissions, status } = ctx.request.body
     let data: any = {
       _id,
-      username,
-      nickname,
-      role,
-      password
+      name,
+      permissions,
+      status
     }
 
     data = filterEmptyField(data)
@@ -55,7 +52,6 @@ export default {
       } else {
         result = await Model.create(data)
       }
-
       ctx.body = json({ data: result })
     } catch (err) {
       ctx.body = json({
@@ -70,7 +66,5 @@ export default {
     const { _id } = ctx.request.body
     const result = await Model.update({ _id }, { $set: { isDeleted: 1 } })
     ctx.body = json(result)
-
-    // 更新下权限表， 菜单未激活或不存在了，权限删除禁用
   }
 }

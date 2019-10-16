@@ -5,7 +5,7 @@ import * as bodyParser from 'koa-bodyparser'
 import * as session from 'koa-session2'
 
 import db from '@/config/db/connect'
-import routers from '@/router'
+import routers from '@/routers'
 import { errcode } from '@/const'
 import { json } from '@/utils'
 import passport from '@/config/passport'

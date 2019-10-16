@@ -1,4 +1,4 @@
-import { permissionsModel as Model } from '@/model'
+import { permissionsModel as Model } from '@/models'
 import { json, filterEmptyField } from '@/utils'
 import { errcode } from '@/const'
 
