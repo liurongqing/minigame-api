@@ -1,5 +1,4 @@
 import 'module-alias/register'
-// require('module-alias/register')
 import * as Koa from 'koa'
 import * as bodyParser from 'koa-bodyparser'
 import * as session from 'koa-session2'
